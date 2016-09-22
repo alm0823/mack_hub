@@ -1,0 +1,52 @@
+---
+title: "STAT 536, HW 3"
+author: "Justin Gomez"
+date: "Due Friday, September 16, 2016"
+output: pdf_document
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, show.signif.stars=FALSE,
+                      dev.args = list(pointsize = 8))
+
+```
+
+
+1)
+    ```{r, echo=T, comment=NA, message=F, warning=F}
+bozetmp <- read.csv("rawbozemandata.csv")
+require(zoo)
+bozetmp$DATE <- as.yearmon(as.character(bozetmp$DATE), "%Y%m")
+bozetmp$MONTH <- as.POSIXlt(bozetmp$DATE)$mon
+bozetmp$YEAR <- as.POSIXlt(bozetmp$DATE)$year + 1900
+bozetmp$FYEAR <- bozetmp$YEAR + bozetmp$MONTH/12
+bozetmp$MONTH <- as.factor(bozetmp$MONTH)
+weather.lm<-lm(bozetmp$MMXT~bozetmp$MONTH)
+resids<-weather.lm$residuals
+par(mfrow=c(2,1))
+plot(bozetmp$FYEAR,resids,type="l")
+plot(bozetmp$FYEAR,bozetmp$MMXT,type="l")
+
+```
+
+
+2)
+```{r, echo=T, comment=NA, message=F, warning=F}
+
+
+```
+
+
+3)
+```{r, echo=T, comment=NA, message=F, warning=F}
+hadcrut<-read.table("http://www.metoffice.gov.uk/hadobs/hadcrut4/data/current/time_series/HadCRUT.4.4.0.0.monthly_nh.txt",col.names=c("Date","Median","Lower1","Upper1","Lower2","Upper2","Lower3","Upper3","Lower4","Upper4","Lower5","Upper5"))
+hadcrut$Median<-ts(hadcrut$Median,start=c(1850,1),end=c(2016,7),frequency=12)
+par(mfrow=c(1,1))
+ts.plot(hadcrut$Median)
+```
+
+4)
+```{r p1, echo=T, comment=NA, message=F, warning=F}
+
+```
+
